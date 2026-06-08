@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const SEO_KNOWLEDGE_BASE = `
 Google SEO Starter Guide - Complete Knowledge Base:
@@ -136,7 +137,7 @@ export default function SEOTopicGenerator() {
 
         try {
             // Calls your own backend - API key stays secret on server
-            const response = await fetch("/api/claude", {
+            const response = await fetch(`${API_URL}/api/claude`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -179,7 +180,7 @@ export default function SEOTopicGenerator() {
         setActiveSlide(0);
 
         try {
-            const response = await fetch("/api/claude", {
+            const response = await fetch(`${API_URL}/api/claude`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
