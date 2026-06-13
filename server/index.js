@@ -13,11 +13,12 @@ const app = express();
 app.use(
     cors({
         origin: [
-            "http://localhost:5173",           // local development
-            "http://localhost:4173",           // local preview
-            process.env.FRONTEND_URL || "",    // set this in Render environment variables
+            "http://localhost:5173",
+            "http://localhost:4173",
+            "https://seo-tool-1-5x6c.onrender.com",  // ← your exact static site URL
+            process.env.FRONTEND_URL || "",
         ],
-        methods: ["GET", "POST"],
+        methods: ["GET", "POST", "OPTIONS"],
         credentials: true,
     })
 );
