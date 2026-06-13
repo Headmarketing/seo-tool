@@ -1,87 +1,86 @@
-const API_URL =
-    import.meta.env.VITE_API_URL || "http://localhost:3001";
+import { useState, useEffect } from "react";
 
 const SEO_KNOWLEDGE_BASE = `
 Google SEO Starter Guide - Complete Knowledge Base:
-
+ 
 1. HOW GOOGLE SEARCH WORKS: Google uses automated crawlers to find and index web pages. Most sites are discovered automatically through links. Changes take hours to months to appear in results.
-
+ 
 2. HELP GOOGLE FIND YOUR CONTENT: Use site: operator to check indexing. Google finds pages through links from already-crawled pages. Submit a sitemap for better crawl coverage. Ensure Google can access CSS and JS resources.
-
+ 
 3. ORGANIZE YOUR SITE STRUCTURE: Create a naturally flowing hierarchy. Use breadcrumb navigation. Create a sitemap file with links to important pages. Avoid deep nesting of pages.
-
+ 
 4. TITLE LINKS AND TITLES: Write unique, accurate page titles. Use brief but descriptive titles. Avoid generic titles like Home. Include your site name if helpful. Avoid keyword stuffing. Keep titles concise.
-
+ 
 5. META DESCRIPTIONS: Write unique meta descriptions for each page. Use them as advertising copy to attract clicks. Include important keywords naturally. Avoid generic descriptions. Optimal length: 150-160 characters.
-
+ 
 6. HEADING TAGS H1-H6: Use headings to structure content hierarchically. Use H1 for main topic, H2-H6 for subtopics. Do not use headings for styling purposes only. Make headings descriptive.
-
+ 
 7. STRUCTURED DATA SCHEMA MARKUP: Add structured data to help Google understand your content. Types: Article, Product, Recipe, FAQ, Event, Job Posting, Review, Local Business, etc. Use JSON-LD format. Test with Rich Results Test tool.
-
+ 
 8. URL STRUCTURE: Create simple, readable URLs. Use words over numbers. Use hyphens not underscores. Avoid lengthy URLs. Do not use excessive keywords in URLs. Use a consistent structure.
-
+ 
 9. NAVIGATION AND INTERNAL LINKING: Good navigation helps users and Google. Include a homepage link on every page. Create natural anchor text for links. Use descriptive text instead of click here. Avoid excessive links on one page.
-
+ 
 10. CONTENT QUALITY: Create helpful, reliable, people-first content. Write for users, not search engines. Demonstrate E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness). Avoid thin, duplicate, or AI-generated low-quality content.
-
+ 
 11. KEYWORD RESEARCH AND STRATEGY: Think like your audience. Use natural language variations. Target question-based queries. Use tools like Google Search Console, Google Trends. Focus on long-tail keywords.
-
+ 
 12. IMAGE OPTIMIZATION: Use descriptive alt text for all images. Use short, descriptive filenames. Use standard formats (JPEG, PNG, WebP). Compress images for faster loading. Serve images in next-gen formats.
-
+ 
 13. CORE WEB VITALS AND PAGE EXPERIENCE: Optimize LCP (Largest Contentful Paint) under 2.5s. Improve FID/INP (interaction delays). Minimize CLS (layout shifts). Use HTTPS. Avoid intrusive interstitials/popups.
-
+ 
 14. MOBILE-FIRST INDEXING: Google primarily uses mobile version for indexing. Use responsive design. Ensure content parity between mobile and desktop. Avoid mobile-only errors. Test with Mobile-Friendly Test.
-
+ 
 15. PAGE SPEED OPTIMIZATION: Compress images. Minimize CSS/JS. Use browser caching. Enable server compression. Use a CDN. Reduce server response time. Remove render-blocking resources.
-
+ 
 16. BACKLINKS AND LINK BUILDING: Earn links naturally through great content. Guest posting on reputable sites. Create linkable assets (infographics, research, tools). Avoid paid links or link schemes. Monitor with Google Search Console.
-
+ 
 17. GOOGLE SEARCH CONSOLE: Set up Search Console for every site. Monitor coverage errors, index status, Core Web Vitals, manual actions. Use Performance report for queries and clicks. Submit sitemaps through GSC.
-
+ 
 18. ROBOTS TXT: Control which pages Google crawls. Place at root of domain. Use Disallow to block sections. Do not use robots.txt to block indexing - use noindex meta tag instead.
-
+ 
 19. CANONICALIZATION: Use rel=canonical to indicate preferred URL version. Prevents duplicate content issues. Handle www vs non-www consistently. Handle trailing slashes consistently. Use 301 redirects for moved content.
-
+ 
 20. FEATURED SNIPPETS OPTIMIZATION: Structure content with clear questions and direct answers. Use numbered lists for processes. Use tables for comparisons. Keep answers concise (40-60 words). Use H2/H3 for questions.
-
+ 
 21. LOCAL SEO: Set up Google Business Profile. Keep NAP (Name, Address, Phone) consistent. Get local citations. Earn local reviews. Use local schema markup. Target local keywords.
-
+ 
 22. HTTPS AND SECURITY: HTTPS is a ranking signal. Get an SSL certificate. Fix mixed content issues. Prevent malware. Monitor security in GSC. Protect user data.
-
+ 
 23. DUPLICATE CONTENT: Avoid having the same content on multiple URLs. Use canonical tags. Set preferred domain in GSC. Handle parameters properly. Consolidate similar pages.
-
+ 
 24. CONTENT FRESHNESS: Update old content regularly. Add publication/update dates. Create evergreen content. Monitor content performance over time. Refresh declining pages.
-
+ 
 25. ANCHOR TEXT OPTIMIZATION: Use descriptive anchor text for links. Vary anchor text naturally. Avoid exact-match anchor text overuse. Ensure link text is relevant to destination page.
-
+ 
 26. SITEMAP OPTIMIZATION: Include all important pages. Update sitemap when adding new content. Submit to GSC. Use separate sitemaps for images, video, news. Keep under 50MB/50,000 URLs per file.
-
+ 
 27. 301 REDIRECTS: Use 301 for permanent moves. Chain redirects hurt performance. Update internal links after redirects. Monitor redirect chains in GSC. Avoid redirect loops.
-
+ 
 28. JAVASCRIPT SEO: Ensure JS-rendered content is indexable. Use server-side or static rendering when possible. Test with URL Inspection Tool. Avoid important content in JS-only rendered sections.
-
+ 
 29. VIDEO SEO: Add video schema markup. Create video sitemaps. Use descriptive titles and descriptions. Host on YouTube for additional visibility. Use transcripts for accessibility and crawlability.
-
+ 
 30. VOICE SEARCH OPTIMIZATION: Target conversational, question-based queries. Optimize for featured snippets. Ensure fast page load. Use FAQ schema. Focus on local queries for voice.
-
+ 
 31. E-E-A-T: Demonstrate real experience with topics. Show author credentials and bios. Get cited by authoritative sources. Display trust signals like reviews, certifications, and contact info.
-
+ 
 32. GOOGLE DISCOVER: Publish engaging, timely content. Use high-quality images (min 1200px wide). Enable large image in GSC. Focus on trending topics. Maintain E-E-A-T.
-
+ 
 33. PAGINATION SEO: Handle paginated content correctly. Consider infinite scroll implications. Ensure paginated pages are crawlable. Use canonical when appropriate.
-
+ 
 34. INTERNATIONAL SEO HREFLANG: Use hreflang tags for multilingual sites. Target correct country and language combinations. Host content locally when possible. Translate and localize content.
-
+ 
 35. CRAWL BUDGET OPTIMIZATION: Remove low-value pages. Fix crawl errors. Improve internal linking. Block unimportant sections in robots.txt. Optimize for large sites with many pages.
-
+ 
 36. SEARCH CONSOLE PERFORMANCE REPORT: Track clicks, impressions, CTR, and position. Filter by query, page, country, device. Identify opportunities to improve CTR. Find pages dropping in rankings.
-
+ 
 37. GOOGLE ANALYTICS AND GSC INTEGRATION: Combine GA and GSC data for full picture. Track organic traffic by landing page. Measure engagement metrics for SEO pages. Set up goals for conversions from organic.
-
+ 
 38. CONTENT SILOS AND TOPIC CLUSTERS: Group related content together. Create pillar pages for broad topics. Link cluster content to pillar page. Build topical authority. Improves crawl efficiency.
-
+ 
 39. SITE ARCHITECTURE: Keep important pages within 3 clicks of homepage. Use logical hierarchy. Flatten site structure where possible. Use breadcrumbs for deep pages.
-
+ 
 40. MONITORING AND AUDITING: Regular SEO audits identify issues. Monitor rankings with tools. Track Core Web Vitals. Review GSC for errors weekly. Monitor backlink profile monthly.
 `;
 
@@ -137,7 +136,8 @@ export default function SEOTopicGenerator() {
 
         try {
             // Calls your own backend - API key stays secret on server
-            const response = await fetch(`${API_URL}/api/claude`, {
+            const API_URL = (import.meta.env.VITE_API_URL || "") + "/api/claude";
+            const response = await fetch(API_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -180,7 +180,8 @@ export default function SEOTopicGenerator() {
         setActiveSlide(0);
 
         try {
-            const response = await fetch(`${API_URL}/api/claude`, {
+            const API_URL = (import.meta.env.VITE_API_URL || "") + "/api/claude";
+            const response = await fetch(API_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
